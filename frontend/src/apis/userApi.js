@@ -18,6 +18,6 @@ export const useCoins = async (data) => {
         return response.data
     }catch (error) {
         console.log(error)
-        return null
+        throw error;
     }
 } 

@@ -59,6 +59,8 @@ function App() {
 
       <Route path='/interview' element={user ? <InterviewStart user={user} setUser={setUser} /> : <Navigate to='/' replace />} />
 
+      <Route path='/interview/:id' element={user ? <InterviewPage user={user} setUser={setUser} /> : <Navigate to='/' replace />} />
+
       <Route path='/interview/:id/report' element={user ? <InterviewReport user={user} setUser={setUser} /> : <Navigate to='/' replace />} />
 
     </Routes>

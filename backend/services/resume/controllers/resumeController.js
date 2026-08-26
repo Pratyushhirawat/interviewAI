@@ -4,6 +4,64 @@ import extractText from "../config/pdf.js";
 import Resume from "../models/resumeModel.js";
 import fs from 'fs';
 
+// LLM se aaya kuch bhi (string ya object) ho, use clean string mein convert karta hai
+function normalizeToStringArray(data) {
+  if (!data) return [];
+  if (!Array.isArray(data)) return [String(data)];
+
+  return data.map((item) => {
+    if (typeof item === "string") return item;
+
+    if (typeof item === "object" && item !== null) {
+      // Projects: { name, description }
+      if (item.name && item.description) {
+        return `${item.name}: ${item.description}`;
+      }
+      // Education: { degree, institution, duration, relevantCourses }
+      if (item.degree) {
+        const courses = Array.isArray(item.relevantCourses)
+          ? ` | Courses: ${item.relevantCourses.join(", ")}`
+          : "";
+        return `${item.degree}, ${item.institution || ""} (${item.duration || ""})${courses}`;
+      }
+      // Experience: { role, company, duration, description } jaisa kuch bhi ho sakta hai
+      if (item.role || item.company || item.title) {
+        return Object.values(item).filter(Boolean).join(" - ");
+      }
+      // Unknown shape — sab keys ko fallback ke roop mein join kar do
+      return Object.entries(item)
+        .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`)
+        .join(" | ");
+    }
+
+    return String(item);
+  });
+}
+
+// resumeData ke saare array fields ko normalize karta hai
+function normalizeResumeData(resumeData) {
+  const arrayFields = [
+    "education",
+    "skills",
+    "projects",
+    "experience",
+    "strengths",
+    "weaknesses",
+    "missingSkills",
+    "recommendations",
+  ];
+
+  const normalized = { ...resumeData };
+
+  arrayFields.forEach((field) => {
+    if (field in normalized) {
+      normalized[field] = normalizeToStringArray(normalized[field]);
+    }
+  });
+
+  return normalized;
+}
+
 export const uploadResume = async (req,res) => {
     let file;
     try {
@@ -28,7 +86,7 @@ export const uploadResume = async (req,res) => {
 
         const aiResponse = await resumeAgent(resumeText)
 
-        const resumeData = JSON.parse(aiResponse)
+        const resumeData = normalizeResumeData(JSON.parse(aiResponse))
 
         let resume = await Resume.findOne({userId})
 
