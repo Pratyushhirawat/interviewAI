@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY package*json ./
 RUN npm install
-COPY ./gateway/package*json ./gateway/
+COPY ./services/resume/package*json ./services/resume/
 RUN npm install 
-COPY gateway ./gateway
+COPY services/resume ./services/resume
 COPY shared ./shared
-WORKDIR /app/gateway
+WORKDIR /app/services/resume
 
-EXPOSE 8000
+EXPOSE 8002
 
 CMD ["npm","start"]

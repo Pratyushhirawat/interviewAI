@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY package*json ./
 RUN npm install
-COPY ./services/auth/package*json ./services/auth/
+COPY ./services/roadmap/package*json ./services/roadmap/
 RUN npm install 
-COPY services/auth ./services/auth
+COPY services/roadmap ./services/roadmap
 COPY shared ./shared
-WORKDIR /app/services/auth
+WORKDIR /app/services/roadmap
 
-EXPOSE 8000
+EXPOSE 8004
 
 CMD ["npm","start"]
