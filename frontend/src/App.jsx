@@ -11,6 +11,8 @@ import ResumeBuilder from './pages/ResumeBuilder'
 import InterviewStart from './pages/InterviewStart'
 import InterviewPage from './pages/InterviewPage'
 import InterviewReport from './pages/InterviewReport'
+import Roadmap from './pages/Roadmap'
+import Billing from './pages/Billing'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -62,6 +64,11 @@ function App() {
       <Route path='/interview/:id' element={user ? <InterviewPage user={user} setUser={setUser} /> : <Navigate to='/' replace />} />
 
       <Route path='/interview/:id/report' element={user ? <InterviewReport user={user} setUser={setUser} /> : <Navigate to='/' replace />} />
+
+      <Route path='/roadmap' element={user ? <Roadmap user={user} setUser={setUser} /> : <Navigate to='/' replace />} />
+
+      <Route path='/billing' element={user ? <Billing user={user} setUser={setUser} /> : <Navigate to='/' replace />} />
+
 
     </Routes>
     </>

@@ -32,8 +32,8 @@ Instructions:
 10. Generate between 8 and 15 modules.
 11. Keep each description concise (2-3 lines).
 12. Do NOT generate YouTube links.
-13. Do NOT generate documentation links.
-14. Another AI agent will attach learning resources later.
+13. For each module, provide the official documentation URL (or the best well-known learning article URL if no official docs exist) in the "article" field.
+14. Another AI agent will attach YouTube video links later.
 15. Return ONLY valid JSON.
 16. Do NOT use markdown.
 17. Do NOT explain anything.
@@ -51,7 +51,8 @@ Return this exact JSON format:
       "title": "",
       "duration": "",
       "difficulty": "",
-      "description": ""
+      "description": "",
+      "article": ""
     }
   ]
 }
@@ -67,6 +68,8 @@ Level must be EXACTLY one of:
 Beginner
 Intermediate
 Advanced
+
+The "article" field must always be a valid, real URL (string). Never leave it empty.
 
 Never return lowercase values.
 

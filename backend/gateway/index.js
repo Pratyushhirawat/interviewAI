@@ -13,7 +13,7 @@ const app = express()
 app.use(express.json())
 
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:process.env.FRONTEND_URL,
     credentials: true
 }))
 
@@ -30,6 +30,7 @@ app.use('/api/auth', proxy(process.env.AUTH_SERVICE_URL))
 app.use('/api/resume',isAuth, proxyWithHeaders(process.env.RESUME_SERVICE_URL))
 app.use('/api/interview',isAuth, proxyWithHeaders(process.env.INTERVIEW_SERVICE_URL))
 app.use('/api/roadmap',isAuth, proxyWithHeaders(process.env.ROADMAP_SERVICE_URL))
+app.use('/api/billing',isAuth, proxyWithHeaders(process.env.BILLING_SERVICE_URL))
 app.get('/api/me', isAuth, getCurrentUser)
 
 

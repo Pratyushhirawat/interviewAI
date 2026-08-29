@@ -137,7 +137,7 @@ function Sidebar({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.13 }}
-                onClick={()=>navigate('/pricing')}
+                onClick={()=>navigate('/billing')}
                 className='group flex cursor-pointer items-center justify-between gap-2.5 rounded-lg border border-white/10 bg-[#000000]/90 backdrop-blur-2xl px-2.5 py-1.5 mb-2.5 transition-all hover:border-white/20 shadow-[0_8px_24px_rgba(0,0,0,0.2)] '>
 
                     <div className='flex items-center gap-1.5'>

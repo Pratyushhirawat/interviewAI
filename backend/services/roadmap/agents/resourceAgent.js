@@ -1,87 +1,86 @@
-import { HumanMessage, SystemMessage } from "@langchain/core/messages";
-import llm from "../configs/llm.js";
 import searchVideo from "../configs/youtube.js";
 
 const resourceAgent = async (state) => {
-    try {
-        const roadmap = state.roadmap
-        const moduleTitles = roadmap.modules.map((module) => module.title).join("\n");
+    const roadmap = state.roadmap;
 
-        const docsResponse = await llm.invoke([
-            new SystemMessage(`
-                
+    roadmap.modules = await Promise.all(
+        roadmap.modules.map(async (module) => {
+            let video = null;
+            try {
+                video = await searchVideo(module.title, module.description);
+            } catch (error) {
+                console.log(error.message);
+            }
 
+            return {
+                ...module,
+                youtube: video?.url || "",
+                // article field roadmapAgent se already aa chuka hai — yahan touch nahi karna
+            };
+        })
+    );
 
-You are an expert software engineer.
-
-For every module below return the official documentation.
-
-Rules:
-
-1. Prefer official documentation.
-2. If official documentation does not exist, return the best learning article.
-3. Return ONLY valid JSON.
-4. Do not explain anything.
-5. Keep the same title.
-
-Return format:
-
-[
-  {
-    "title":"",
-    "article":""
-  }
-]
-
-`), new HumanMessage(`modules: ${moduleTitles}`)
-        ])
-
-        let docs = [];
-
-        try {
-             docs = JSON.parse(
-                docsResponse.content.replace(/```json/g, "")
-                .replace(/```/g, "").trim())
-        } catch (error) {
-            docs = [];
-        }
-
-        const docsMap = new Map()
-
-        docs.forEach((item) => {
-            docsMap.set(
-                item.title.toLowerCase(),
-                item.article
-            );
-        });
-
-        roadmap.modules = await Promise.all(
-            roadmap.modules.map(async (module) => {
-                let video = null;
-
-                try {
-                    video = await searchVideo(module.title);
-                } catch (error) {
-                    console.log(error.message);
-                }
-
-                return {
-                    ...module,
-                    youtube: video?.url || "",
-                    article: docsMap.get(module.title.toLowerCase()) || "",
-                };
-            })
-        )
-
-        return {
-            ...state,
-            roadmap,
-        }
-    } catch (error) {
-        console.log(error);
-
-        return state;
-    }
-}
+    return {
+        ...state,
+        roadmap,
+    };
+};
 
 export default resourceAgent;
+
+
+
+// import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+// import llm from "../configs/llm.js";
+// import searchVideo from "../configs/youtube.js";
+
+// const resourceAgent = async (state) => {
+//     const roadmap = state.roadmap;
+
+//     let docsMap = new Map();
+
+//     try {
+//         const moduleTitles = roadmap.modules.map((module) => module.title).join("\n");
+
+//         const docsResponse = await llm.invoke([
+//             new SystemMessage(`...`),
+//             new HumanMessage(`modules: ${moduleTitles}`)
+//         ]);
+
+//         const docs = JSON.parse(
+//             docsResponse.content.replace(/```json/g, "").replace(/```/g, "").trim()
+//         );
+
+//         docs.forEach((item) => {
+//             docsMap.set(item.title.toLowerCase(), item.article);
+//         });
+//     } catch (error) {
+//         console.log("Docs fetch failed, continuing without docs:", error.message);
+//         // docsMap stays empty — that's fine, article will fallback to ""
+//     }
+
+//     // Ye ab hamesha chalega, chahe upar wala LLM call fail ho ya na ho
+//     roadmap.modules = await Promise.all(
+//         roadmap.modules.map(async (module) => {
+//             let video = null;
+//             try {
+//                 video = await searchVideo(module.title);
+//             } catch (error) {
+//                 console.log(error.message);
+//             }
+
+//             return {
+//                 ...module,
+//                 youtube: video?.url || "",
+//                 article: docsMap.get(module.title.toLowerCase()) || "",
+//             };
+//         })
+//     );
+
+//     return {
+//         ...state,
+//         roadmap,
+//     };
+// };
+
+// export default resourceAgent;

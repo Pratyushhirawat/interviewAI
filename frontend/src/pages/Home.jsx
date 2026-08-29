@@ -4,7 +4,7 @@ import {GiArtificialHive} from  'react-icons/gi'
 import {FaArrowRight} from 'react-icons/fa6'
 import LoginModel from '../components/LoginModel'
 import { FiBarChart2, FiFileText, FiMap, FiMic } from 'react-icons/fi'
-// import dashboard from '../assets/image.png'
+import dashboard from '../assets/image.png'
 
 function Home({setUser}) {
     const [showLogin, setShowLogin] = useState(false)
@@ -92,8 +92,7 @@ function Home({setUser}) {
             transition={{ duration: 0.7, delay: 0.3 }}
             className='mt-10 rounded-lg overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.06)] max-w-2xl mx-auto'>
 
-                {/* Add A dashboard image in this 
-                <img src={dashboard} alt='dashboard image' className='w-full h-auto object-cover block' /> */}
+                <img src={dashboard} alt='dashboard image' className='w-full h-auto object-cover block' />
 
             </motion.div>
 
