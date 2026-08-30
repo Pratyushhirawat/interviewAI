@@ -1,21 +1,21 @@
-interviewAI
+# interviewAI
 
-An all-in-one AI-powered career preparation platform** — build your resume, check your ATS score, generate a personalized learning roadmap, and practice interviews with an AI voice interviewer for both technical and HR rounds.
+**An all-in-one AI-powered career preparation platform** — build your resume, check your ATS score, generate a personalized learning roadmap, and practice interviews with an AI voice interviewer for both technical and HR rounds.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-✨ Features
+## ✨ Features
 
-📄 Resume Builder & ATS Checker
+### 📄 Resume Builder & ATS Checker
 - Create a professional resume from scratch inside the app
-- Get an instant ATS (Applicant Tracking System) compatibility score to see how well your resume performs against automated screening systems
+- Get an instant **ATS (Applicant Tracking System) compatibility score** to see how well your resume performs against automated screening systems
 - Actionable suggestions to improve resume quality and keyword match
 
-🗺️ AI Roadmap Builder
+### 🗺️ AI Roadmap Builder
 - Generates a personalized learning roadmap based on your target role/skills
 - Each roadmap node comes attached with **curated YouTube lectures and articles**, so you can learn directly from the roadmap without searching separately
 
-🎙️ AI Voice Interviewer
+### 🎙️ AI Voice Interviewer
 - Conducts **both Technical and HR interviews**
 - Fully voice-based — ask and answer questions naturally, just like a real interview
 - **Built-in code editor** for technical/coding rounds
@@ -24,24 +24,24 @@ An all-in-one AI-powered career preparation platform** — build your resume, ch
   - Type your answer manually
 - Real-time interview flow powered by AI agents
 
-📊 Dashboard
+### 📊 Dashboard
 - Centralized dashboard to track all your activity — resumes created, interviews taken, roadmap progress, and past scores/records
 
-💳 Payments
+### 💳 Payments
 - Integrated **Razorpay** for subscription/premium plan payments
 
-🔐 Authentication
+### 🔐 Authentication
 - **Google Sign-In** via Firebase Authentication for quick and secure login
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 
-Frontend
+**Frontend**
 - React.js
 - JavaScript
 
-Backend
+**Backend**
 - Node.js / Express (microservices architecture)
 - MongoDB
 
@@ -62,7 +62,7 @@ Backend
 - Redis for shared caching/session data
 - Dockerized services with individual Dockerfiles + `docker-compose.yml`
 
----
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## 🏗️ Project Structure
 
